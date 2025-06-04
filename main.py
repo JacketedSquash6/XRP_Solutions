@@ -5,8 +5,9 @@ from dijkstra_perfect_navigator import DijktstraPerfectNavigator
 from simulator_pilot import SimulatorPilot
 
 def main():
-    pilot = SimulatorPilot()
-    navigator = DijktstraPerfectNavigator()
+    map = [[False for i in range(6)] for j in range(6)]
+    pilot = SimulatorPilot(map)
+    navigator = DijktstraPerfectNavigator((0,0), Facing.NORTH, map)
 
     targets = [(4,1), (3,3), (5,5), (0, 4), (0,0)]
     score = 0
@@ -18,6 +19,7 @@ def main():
             if action == Action.DONE:
                 break
             response = take_action(pilot, action) # for the incomplete-information agents, failing movements will tell them information about the shape of the maze
+            navigator.receive_response(response)
             pilot.display()
         
         if pilot.test_target(t):

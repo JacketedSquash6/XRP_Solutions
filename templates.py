@@ -47,12 +47,6 @@ class Pilot:
         return False
 
 class Navigator:
-    def __init__(self, position = (0,0), facing = Facing.NORTH, map = [[False for i in range(6)] for j in range(6)]):
-        self.my_row = position[0]
-        self.my_col = position[1]
-        self.my_facing = facing
-        self.map = map
-
     def set_target(self, target):
         self.target_row = target[0]
         self.target_col = target[1]

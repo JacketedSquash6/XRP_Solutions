@@ -1,11 +1,11 @@
 from templates import Facing, Pilot
 
 
-class SimulatorPilot(Pilot):
-    def __init__(self):
-        self.height = 6
-        self.width = 6
-        self.map = [[False for i in range(6)] for i in range(6)]
+class SimulatorPilot(Pilot):        
+    def __init__(self, map):
+        self.height = len(map)
+        self.width = len(map[0])
+        self.map = map
 
         self.robot_row = 0
         self.robot_col = 0
@@ -51,6 +51,9 @@ class SimulatorPilot(Pilot):
         return (self.robot_row == target[0] and self.robot_col == target[1])
     
     ## Helper Functions
+    def get_map(self):
+        return self.map
+
     def char_at(self, row, col): # TODO Have students write this themselves. Maybe as an extra credit opportunity, make it modular so they can use the Turtle module to make a more graphical visualization of the situation
         if self.robot_row == row and self.robot_col == col:
             if self.robot_facing == Facing.NORTH:
