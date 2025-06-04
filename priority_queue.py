@@ -3,10 +3,10 @@ class PriorityQueue:
         self.array = []
         
     def put(self, item):
-        (key, _value) = item
+        key = item[0]
         # else
         for i in range(len(self.array)):
-            (key_at_i, _val_at_i) = self.array[i]
+            key_at_i = self.array[i][0]
             if key < key_at_i:
                 self.array.insert(i, item)
                 return
