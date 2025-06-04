@@ -1,8 +1,8 @@
 from templates import Action, Facing
 
 class NodeChainFollower:
-    def __init__(self, chain, position, facing):
-        self.node_chain = chain
+    def __init__(self, position, facing):
+        self.node_chain = []
         self.my_row = position[0]
         self.my_col = position[1]
         self.my_facing = facing

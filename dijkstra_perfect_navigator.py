@@ -5,7 +5,7 @@ from algorithms import dijkstra
 class DijktstraPerfectNavigator(Navigator):
     def __init__(self, position, facing, map):
         self.map = map
-        self.node_chain_follower = NodeChainFollower([], position, facing)
+        self.node_chain_follower = NodeChainFollower(position, facing)
 
     def set_target(self, target):
         self.node_chain_follower.set_chain(dijkstra(self.map, self.node_chain_follower.get_position(), target))
