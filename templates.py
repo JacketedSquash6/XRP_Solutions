@@ -1,5 +1,3 @@
-from enum import Enum
-
 class Action:
     TURN_LEFT = 0
     TURN_RIGHT = 1
