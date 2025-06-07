@@ -39,5 +39,9 @@ class NodeChainFollower:
     
     def get_position(self):
         return (self.my_row, self.my_col)
+    def set_position(self, position):
+        self.my_row = position[0]
+        self.my_col = position[1]
+
     def get_facing(self):
         return self.my_facing

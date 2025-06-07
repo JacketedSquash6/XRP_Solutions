@@ -31,7 +31,7 @@ def dijkstra(map, start, end):
         for neighbor in neighbors:
             if neighbor.visited: # already found shortest path to this node, no use looking at it again
                 continue
-            if map[neighbor.position[0]][neighbor.position[1]] == False: # if the location is blocked, don't navigate through it
+            if map[neighbor.position[0]][neighbor.position[1]] == True: # if the location is blocked, don't navigate through it
                 continue
             if neighbor.distance is None or neighbor.distance > node.distance + 1:
                 neighbor.distance = node.distance + 1
