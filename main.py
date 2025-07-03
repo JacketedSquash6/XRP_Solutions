@@ -28,8 +28,7 @@ def main():
             action = navigator.select_action()
             if action == Action.DONE:
                 break
-            response = take_action(pilot, action) # for the incomplete-information agents, failing movements will tell them information about the shape of the maze
-            navigator.receive_response(response)
+            take_action(pilot, action)
             #pilot.display()
         
         if pilot.test_target(t):

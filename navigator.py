@@ -16,22 +16,22 @@ class Navigator:
         if len(self.node_chain) == 0:
             return Action.DONE
 
-        (self.next_row, self.next_col) = self.node_chain[0]
-        if self.next_row == self.my_row + 1 and self.next_col == self.my_col:
+        (next_row, next_col) = self.node_chain[0]
+        if next_row == self.my_row + 1 and next_col == self.my_col:
             self.next_facing = Facing.NORTH
-        elif self.next_row == self.my_row and self.next_col == self.my_col + 1:
+        elif next_row == self.my_row and next_col == self.my_col + 1:
             self.next_facing = Facing.EAST
-        elif self.next_row == self.my_row - 1 and self.next_col == self.my_col:
+        elif next_row == self.my_row - 1 and next_col == self.my_col:
             self.next_facing = Facing.SOUTH
-        elif self.next_row == self.my_row and self.next_col == self.my_col - 1:
+        elif next_row == self.my_row and next_col == self.my_col - 1:
             self.next_facing = Facing.WEST
         else:
             raise RuntimeError("Navigator wants to move to a non-adjacent space")
         
-        self.moving = False
         if self.next_facing == self.my_facing:
-            self.node_chain.pop(0) # it's ok to pop here because if the move fails, you have to rebuild the node chain anyway
-            self.moving = True
+            self.my_row = next_row
+            self.my_col = next_col
+            self.node_chain.pop(0) # pop the front of the chain because now we're there and need to know the next place to go
             return Action.FORWARD
         
         if Facing.left(self.my_facing) == self.next_facing:
@@ -40,15 +40,6 @@ class Navigator:
         
         self.my_facing = Facing.right(self.my_facing)
         return Action.TURN_RIGHT
-    
-    def receive_response(self, response):
-        if response == True:
-            if self.moving == True:
-                self.my_row = self.next_row
-                self.my_col = self.next_col
-        else:
-            self.map[self.next_row][self.next_col] = True
-            self.set_target(self.target)
     
     def get_position(self):
         return (self.my_row, self.my_col)
