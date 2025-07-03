@@ -43,14 +43,6 @@ class Pilot:
     
     def test_target(self, target):
         return False
-
-class Navigator:
-    def set_target(self, target):
-        self.target_row = target[0]
-        self.target_col = target[1]
-    
-    def select_action(self):
-        return Action.FORWARD
     
 class Node:
     def __init__(self, row, col):

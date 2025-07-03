@@ -1,15 +1,22 @@
 from templates import Action, Facing
-from random_navigator import RandomNavigator
-from dijkstra_perfect_navigator import DijktstraPerfectNavigator
-# from naive_search_navigator import NaiveSearchNavigator
+from navigator import Navigator
 from simulator_pilot import SimulatorPilot
+import random
 
 def main():
-    map = [[False for i in range(6)] for j in range(6)]
+    height, width = (6,6)
+    map = [[(random.random() < 0.1) for i in range(width)] for j in range(height)]
     pilot = SimulatorPilot(map)
-    navigator = DijktstraPerfectNavigator((0,0), Facing.NORTH, map)
+    navigator = Navigator((0,0), Facing.NORTH, (height, width))
 
-    targets = [(4,1), (3,3), (5,5), (0, 4), (0,0)]
+    targets = []
+    while len(targets) < 10:
+        t_row = random.randint(0, height-1)
+        t_col = random.randint(0, width-1)
+        if not map[t_row][t_col]:
+            targets.append((t_row, t_col))
+
+    pilot.display()
     score = 0
     for t in targets:
         navigator.set_target(t)
