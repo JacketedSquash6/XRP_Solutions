@@ -1,5 +1,4 @@
-from templates import Action, Facing
-from algorithms import dijkstra
+from templates import Action, Facing, dijkstra
 
 class Navigator:
     def __init__(self, position, facing, dimensions):

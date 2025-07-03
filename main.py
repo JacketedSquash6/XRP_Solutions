@@ -1,12 +1,14 @@
 from templates import Action, Facing
 from navigator import Navigator
 from simulator_pilot import SimulatorPilot
+from robot_pilot import RobotPilot
 import random
 
 def main():
-    height, width = (6,6)
+    height, width = (5,6)
     map = [[(random.random() < 0.1) for i in range(width)] for j in range(height)]
-    pilot = SimulatorPilot(map)
+    #pilot = SimulatorPilot(map)
+    pilot = RobotPilot()
     navigator = Navigator((0,0), Facing.NORTH, (height, width))
 
     targets = []
@@ -16,9 +18,10 @@ def main():
         if not map[t_row][t_col]:
             targets.append((t_row, t_col))
 
-    pilot.display()
+    #pilot.display()
     score = 0
     for t in targets:
+        print("Navigating to Target", t)
         navigator.set_target(t)
         action = None
         for i in range(100): # navigator gets 100 moves to get us to target
@@ -27,7 +30,7 @@ def main():
                 break
             response = take_action(pilot, action) # for the incomplete-information agents, failing movements will tell them information about the shape of the maze
             navigator.receive_response(response)
-            pilot.display()
+            #pilot.display()
         
         if pilot.test_target(t):
             print("Arrived at Target", t)
