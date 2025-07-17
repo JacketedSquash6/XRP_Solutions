@@ -1,16 +1,15 @@
-from templates import Action, Facing, dijkstra
+from templates import Action, Facing, bfs
 
 class Navigator:
-    def __init__(self, position, facing, dimensions):
+    def __init__(self, position, facing, map):
         self.my_row, self.my_col = position
         self.my_facing = facing
-        height, width = dimensions
-        self.map = [[False for i in range(width)] for j in range(height)]
+        self.map = map
         self.node_chain = []
 
     def set_target(self, target):
         self.target = target
-        self.node_chain = dijkstra(self.map, self.get_position(), target)
+        self.node_chain = bfs(self.map, self.get_position(), target)
     
     def select_action(self):
         if len(self.node_chain) == 0:

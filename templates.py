@@ -51,61 +51,46 @@ class Node:
         self.visited = False
         self.previous = None
         
-class PriorityQueue:
-    def __init__(self):
-        self.array = []
-        
-    def put(self, item):
-        key = item[0]
-        # else
-        for i in range(len(self.array)):
-            key_at_i = self.array[i][0]
-            if key < key_at_i:
-                self.array.insert(i, item)
-                return
-        # if this is the largest so far (or equal), it goes at the end
-        self.array.append(item)
-    def empty(self):
-        return len(self.array) == 0
-    def get(self):
-        return self.array.pop(0)
-        
-def dijkstra(map, start, end):
-    start_row, start_col = start
+def bfs(map, start, end):
+    # unrolling position tuples
+    start_row, start_col = start 
     end_row, end_col = end
+    # extracting the height and width of the grid by looking at the map list's dimensions
     height = len(map)
     width = len(map[0])
+
+    # initializing the array of nodes with their positions
     nodes = [[Node(j, i) for i in range(width)] for j in range(height)]
     nodes[start_row][start_col].distance = 0
-    q = PriorityQueue()
-    q.put((0, nodes[start_row][start_col]))
+    nodes[start_row][start_col].visited = True
 
-    while nodes[end_row][end_col].distance is None and not q.empty():
-        distance, node = q.get()
-        row, col = node.position
-        if node.visited:
-            continue
-        node.visited = True
+    for i in range(width * height): # we want to iterate through all 0-distance nodes to find all 1-distance nodes, then through 1s to find 2s, etc.
+        #  A good upper bound for distance is width*height because there are only that many nodes total. In general, we will find the endpoint much sooner than that and break out
+        for row in range(height):
+            for col in range(width):
+                if map[row][col] == True:
+                    continue # Locations that are blocked do not need to be considered
 
-        neighbors = []
-        if row < height-1:
-            neighbors.append(nodes[row+1][col])
-        if row > 0:
-            neighbors.append(nodes[row-1][col])
-        if col < width-1:
-            neighbors.append(nodes[row][col+1])
-        if col > 0:
-            neighbors.append(nodes[row][col-1])
+                node = nodes[row][col]
+                if node.visited: # a visited node has already been assigned a distance, so we don't need to look at it again
+                    continue
 
-        for neighbor in neighbors:
-            if neighbor.visited: # already found shortest path to this node, no use looking at it again
-                continue
-            if map[neighbor.position[0]][neighbor.position[1]] == True: # if the location is blocked, don't navigate through it
-                continue
-            if neighbor.distance is None or neighbor.distance > node.distance + 1:
-                neighbor.distance = node.distance + 1
-                neighbor.previous = node
-                q.put((neighbor.distance, neighbor))
+                neighbors = []
+                if row < height-1: # if we are not at the top, then there is a node above us
+                    neighbors.append(nodes[row+1][col])
+                if row > 0: # if we are not at the bottom, then there is a node below us
+                    neighbors.append(nodes[row-1][col])
+                if col < width-1: # if we are not at the rightmost column, then there is a node to the right
+                    neighbors.append(nodes[row][col+1])
+                if col > 0: # if we are not at the leftmost column, then there is a node to the left
+                    neighbors.append(nodes[row][col-1])
+
+                for neighbor in neighbors: # we need to check all four neighbors to see if they have the right distance
+                    if neighbor.distance == i:
+                        node.distance = i+1
+                        node.visited = True
+                        node.previous = neighbor
+                        break
     output = []
     predecessor = nodes[end_row][end_col]
     while predecessor.previous is not None:
