@@ -9,7 +9,7 @@ def main():
     map = [[(random.random() < 0.1) for i in range(width)] for j in range(height)]
     #pilot = SimulatorPilot(map)
     pilot = RobotPilot()
-    navigator = Navigator((0,0), Facing.NORTH, (height, width))
+    navigator = Navigator((0,0), Facing.NORTH, map)
 
     targets = []
     while len(targets) < 10:
