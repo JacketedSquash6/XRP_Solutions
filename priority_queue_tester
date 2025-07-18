@@ -1,0 +1,75 @@
+from templates import PriorityQueue
+
+### Copy this class definition into templates.py ###
+
+# class PriorityQueue:
+#     def __init__(self):
+#         self.array = []
+        
+#     def put(self, item):
+#         # Store the given item in the proper place in the array
+#         return
+#     def empty(self):
+#         # Return a boolean answer to the question: Is the queue empty?
+#         return True
+#     def get(self):
+#         # Return the item at the front of the queue
+#         return None
+
+def main_test():
+    tests_passed = 0
+    total_tests = 3
+    if test_0():
+        tests_passed += 1
+    else:
+        print("failed test 0")
+    
+    if test_1():
+        tests_passed += 1
+    else:
+        print("failed test 1")
+    
+    if test_2():
+        tests_passed += 1
+    else:
+        print("failed test 2")
+
+    print("passed", tests_passed, "tests")
+
+def test_0():
+    q = PriorityQueue()
+    if q.empty() == False: # Queue should initially be empty
+        return False
+    q.put((1, "Foo"))
+    if q.empty() == True: # After putting in an item, Queue should not be empty
+        return False
+    q.get()
+    if q.empty() == False: # After removing the item, Queue should be empty again
+        return False
+    # if all of those worked fine, you passed the test
+    return True
+
+def test_1():
+    q = PriorityQueue()
+    q.put((4, "Foo"))
+    result = q.get()
+    if result[0] == 4 and result[1] == "Foo":
+        return True
+    else:
+        return False
+    
+def test_2():
+    q = PriorityQueue()
+    q.put((5, "Foo"))
+    q.put((8, "Bar"))
+    q.put((2, "Spam"))
+    if q.get()[1] != "Spam":
+        return False
+    if q.get()[1] != "Foo":
+        return False
+    if q.get()[1] != "Bar":
+        return False
+    return True
+
+if __name__ == "__main__":
+    main_test()
