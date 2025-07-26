@@ -2,7 +2,7 @@ class Action:
     TURN_LEFT = 0
     TURN_RIGHT = 1
     FORWARD = 2
-    DONE = 3 # TODO Leave this out in the initial code, so that students can come up with the fact that they need a new function
+    DONE = 3
 
 class Facing:
     NORTH = 0

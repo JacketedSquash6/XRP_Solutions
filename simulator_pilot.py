@@ -54,7 +54,7 @@ class SimulatorPilot(Pilot):
     def get_map(self):
         return self.map
 
-    def char_at(self, row, col): # TODO Have students write this themselves. Maybe as an extra credit opportunity, make it modular so they can use the Turtle module to make a more graphical visualization of the situation
+    def char_at(self, row, col): 
         if self.robot_row == row and self.robot_col == col:
             if self.robot_facing == Facing.NORTH:
                 return '^'

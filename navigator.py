@@ -1,11 +1,10 @@
 from templates import Action, Facing, bfs
 
 class Navigator:
-    def __init__(self, position, facing, map):
+    def __init__(self, position, facing):
         self.my_row, self.my_col = position
         self.my_facing = facing
-        self.map = map
-        self.node_chain = []
+        self.action_chain = []
 
     def set_target(self, target):
         self.target = target
