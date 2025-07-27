@@ -17,7 +17,24 @@ def turn_around(self):
     while reflectance.get_right()<0.8:
             drivetrain.set_effort(-BASE_SPEED, BASE_SPEED)
 
-while True:
-    self.line_follow()
-    if self.check_intersection():
-        turn_around()
+def turn_left(self):
+    drivetrain.turn(80)
+    while reflectance.get_right()<0.8:
+            drivetrain.set_effort(-BASE_SPEED, BASE_SPEED)
+            
+    return True
+
+def turn_right(self): 
+    drivetrain.turn(-80)
+    while reflectance.get_left()<0.8:
+            drivetrain.set_effort(BASE_SPEED, -BASE_SPEED)
+
+    return True
+
+def forward(self):
+    while True:
+        self.line_follow()
+        if self.check_intersection():
+            drivetrain.straight(10)
+            break
+    return True
