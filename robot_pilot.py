@@ -1,5 +1,4 @@
 from XRPLib.defaults import *
-from templates import Facing, Pilot
 
 BASE_EFFORT = 0.3
 TURN_CONSTANT = 0.5
