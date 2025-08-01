@@ -1,6 +1,7 @@
 from navigator import Navigator
 # from manhattan_planner import ManhattanPlanner
-from bfs_planner import BFSPlanner
+# from bfs_planner import BFSPlanner
+from dijkstra_planner import DijkstraPlanner
 from simulator_pilot import SimulatorPilot
 # from robot_pilot import RobotPilot
 import random
@@ -16,7 +17,8 @@ def main():
     # obstacles = [(1,1), (3,2), (4,5)] # If using a RobotPilot, this list should contain the real locations of the obstacles.
 
     # planner = ManhattanPlanner(dimensions)
-    planner = BFSPlanner(dimensions, obstacles)
+    # planner = BFSPlanner(dimensions, obstacles)
+    planner = DijkstraPlanner(dimensions, obstacles)
 
     navigator = Navigator(planner)
 
