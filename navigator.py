@@ -1,15 +1,7 @@
 from utilities import NORTH, EAST, SOUTH, WEST, facing_left, facing_right, facing_opposite, TURN_LEFT, TURN_RIGHT, FORWARD
 
 class Navigator:
-    def __init__(self, planner):
-        self.planner = planner
-
-    def navigate_to(self, position, facing, target):
-        node_list = self.planner.plan(position, target)
-        action_list = Navigator.generate_actions(node_list, facing)
-        return action_list
-
-    def generate_actions(node_list, initial_facing):
+    def generate_actions(self, node_list, initial_facing):
         action_list = [] # This is what we will return
         current_row = node_list[0][0] # Our initial position is the first item in the node chain
         current_col = node_list[0][1]
