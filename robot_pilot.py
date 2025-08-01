@@ -15,18 +15,14 @@ class RobotPilot:
         while reflectance.get_right()<0.8:
                drivetrain.set_effort(-0.3,0.3)
         self.robot_facing = facing_left(self.robot_facing)
-        return True
     
     def turn_right(self): 
         drivetrain.turn(-80)
         while reflectance.get_left()<0.8:
                drivetrain.set_effort(0.3,-0.3)
         self.robot_facing = facing_right(self.robot_facing)
-        return True
     
     def forward(self):
-        if False: #TODO distance sensor
-            return False
         while True:
             self.line_follow()
             if self.check_intersection():
@@ -41,8 +37,6 @@ class RobotPilot:
             self.robot_row = self.robot_row - 1
         elif self.robot_facing == WEST:
             self.robot_col = self.robot_col - 1
-        
-        return True
     
     def get_position(self):
         return (self.robot_row, self.robot_col)
@@ -51,17 +45,13 @@ class RobotPilot:
     def do_actions(self, action_list):
         for action in action_list:
             if action == TURN_LEFT:
-                result = self.turn_left()
+                self.turn_left()
             elif action == TURN_RIGHT:
-                result = self.turn_right()
+                self.turn_right()
             elif action == FORWARD:
-                result = self.forward()
+                self.forward()
             else:
                 raise RuntimeError("Robot wants to do an undefined action")
-            if result == False:
-                return False
-
-        return True
         
     # Helper Functions
     def line_follow(self):
