@@ -1,15 +1,11 @@
 from utilities import NORTH, EAST, SOUTH, WEST, facing_left, facing_right, facing_opposite, TURN_LEFT, TURN_RIGHT, FORWARD
 
-class Node:
-    def __init__(self, row, col):
-        self.position = (row, col)
-        self.distance = None
-        self.visited = False
-        self.previous = None
-
 class Navigator:
-    def navigate_to(grid, position, facing, target):
-        node_list = Navigator.bfs(grid, position, target)
+    def __init__(self, planner):
+        self.planner = planner
+
+    def navigate_to(self, position, facing, target):
+        node_list = self.planner.plan(position, target)
         action_list = Navigator.generate_actions(node_list, facing)
         return action_list
 
@@ -17,7 +13,7 @@ class Navigator:
         action_list = [] # This is what we will return
         current_row = node_list[0][0] # Our initial position is the first item in the node chain
         current_col = node_list[0][1]
-        node_list.pop(0)
+        node_list.pop(0) # remove initial position so we can navigate to the next position
         current_facing = initial_facing # Our initial facing is given
 
         while len(node_list) > 0:
@@ -60,51 +56,3 @@ class Navigator:
             node_list.pop(0)
         
         return action_list
-
-
-    def bfs(grid, start, end):
-        # unrolling position tuples
-        start_row, start_col = start 
-        end_row, end_col = end
-        # extracting the height and width of the grid by looking at the grid list's dimensions
-        height = len(grid)
-        width = len(grid[0])
-
-        # initializing the array of nodes with their positions
-        nodes = [[Node(j, i) for i in range(width)] for j in range(height)]
-        nodes[start_row][start_col].distance = 0
-        nodes[start_row][start_col].visited = True
-
-        for i in range(width * height): # we want to iterate through all 0-distance nodes to find all 1-distance nodes, then through 1s to find 2s, etc.
-            #  A good upper bound for distance is width*height because there are only that many nodes total. In general, we will find the endpoint much sooner than that and break out
-            for row in range(height):
-                for col in range(width):
-                    if grid[row][col] == True:
-                        continue # Locations that are blocked do not need to be considered
-
-                    node = nodes[row][col]
-                    if node.visited: # a visited node has already been assigned a distance, so we don't need to look at it again
-                        continue
-
-                    neighbors = []
-                    if row < height-1: # if we are not at the top, then there is a node above us
-                        neighbors.append(nodes[row+1][col])
-                    if row > 0: # if we are not at the bottom, then there is a node below us
-                        neighbors.append(nodes[row-1][col])
-                    if col < width-1: # if we are not at the rightmost column, then there is a node to the right
-                        neighbors.append(nodes[row][col+1])
-                    if col > 0: # if we are not at the leftmost column, then there is a node to the left
-                        neighbors.append(nodes[row][col-1])
-
-                    for neighbor in neighbors: # we need to check all four neighbors to see if they have the right distance
-                        if neighbor.distance == i:
-                            node.distance = i+1
-                            node.visited = True
-                            node.previous = neighbor
-                            break
-        output = []
-        predecessor = nodes[end_row][end_col]
-        while predecessor is not None:
-            output.insert(0, predecessor.position)
-            predecessor = predecessor.previous
-        return output

@@ -1,17 +1,17 @@
+import random
 from utilities import NORTH, EAST, SOUTH, WEST, facing_left, facing_right, TURN_LEFT, TURN_RIGHT, FORWARD
 
-
 class SimulatorPilot:        
-    def __init__(self, grid):
-        self.height = len(grid)
-        self.width = len(grid[0])
-        self.grid = grid
+    def __init__(self, dimensions):
+        self.height = dimensions[0]
+        self.width = dimensions[1]
+        # Simulator ignores physical reality and places obstacles at random
+        self.grid = [[(random.random() < 0.1) for j in range(self.width)] for i in range(self.height)] 
 
         self.robot_row = 0
         self.robot_col = 0
         self.robot_facing = NORTH
 
-    ## Mandatory Functions
     def turn_left(self):
         self.robot_facing = facing_left(self.robot_facing)
         return True
@@ -64,3 +64,11 @@ class SimulatorPilot:
                 return False
 
         return True
+
+    def get_obstacles_list(self):
+        obstacles = []
+        for i in range(self.height):
+            for j in range(self.width):
+                if self.grid[i][j] == True:
+                    obstacles.append((i,j))
+        return obstacles

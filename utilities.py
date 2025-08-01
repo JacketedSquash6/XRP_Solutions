@@ -35,10 +35,16 @@ def facing_opposite(f):
     if f == WEST:
         return EAST
 
+class Node:
+    def __init__(self, row, col):
+        self.position = (row, col)
+        self.distance = None
+        self.visited = False
+        self.previous = None
 
-def display(grid, robot_position, robot_facing):
-    height = len(grid)
-    width = len(grid[0])
+def display(dimensions, obstacles, robot_position, robot_facing):
+    height = dimensions[0]
+    width = dimensions[1]
     print("-----------------")
     for i in range(height-1, -1, -1): # Since we are printing top-to-bottom but the positive y direction is north, we must print the lines in reverse order
         for j in range(width):
@@ -53,7 +59,7 @@ def display(grid, robot_position, robot_facing):
                     char = '<'
                 else:
                     raise RuntimeError("Robot does not have a legal facing")
-            elif grid[i][j] == True:
+            elif (i, j) in obstacles:
                 char = '#'
             else:
                 char = '.'
