@@ -29,13 +29,24 @@ def main():
         if (t_row, t_col) not in obstacles: # targets can't be placed at blocked intersections
             targets.append((t_row, t_col))
 
+    ### MANDATORY ###
+    # after targets are generated, we cannot retain knowledge of where the obstacles are!
+    obstacles = []
+    ### MANDATORY ###
+
     display(dimensions, obstacles, pilot.get_position(), pilot.get_facing())
     score = 0
     for target in targets:
-        print("Navigating to Target", target)
-        action_list = navigator.navigate_to(pilot.get_position(), pilot.get_facing(), target)
-        print(action_list)
-        pilot.do_actions(action_list)
+        success = False
+        while not success:
+            print("Navigating to Target", target)
+            action_list = navigator.navigate_to(pilot.get_position(), pilot.get_facing(), target)
+            print(action_list)
+            success = pilot.do_actions(action_list)
+            if not success:
+                print("Collision!")
+                navigator.collision(pilot.get_position(), pilot.get_facing())
+        
         display(dimensions, obstacles, pilot.get_position(), pilot.get_facing())
         
         if pilot.get_position() == target:

@@ -56,3 +56,19 @@ class Navigator:
             node_list.pop(0)
         
         return action_list
+    
+    def collision(self, position, facing):
+        row = position[0]
+        col = position[1]
+
+        # calculate the location of the obstacle you ran into
+        if facing == NORTH:
+            obstacle = (row + 1, col)
+        elif facing == EAST:
+            obstacle = (row, col + 1)
+        elif facing == SOUTH:
+            obstacle = (row - 1, col)
+        elif facing == WEST:
+            obstacle = (row, col - 1)
+
+        self.planner.obstacles.append(obstacle)
