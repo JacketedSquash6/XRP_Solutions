@@ -21,11 +21,7 @@ class RobotPilot:
             if self.check_intersection():
                 drivetrain.straight(10)
                 break
-    
-    def get_position(self):
-        return (self.robot_row, self.robot_col)
-    def get_facing(self):
-        return self.robot_facing
+            
     def do_actions(self, action_list):
         for action in action_list:
             if action == TURN_LEFT:
